@@ -35,19 +35,19 @@ export default function Page(): React.JSX.Element {
         <Grid lg={3} sm={6} xs={12}>
           <CreditCard
             sx={{ height: '100%' }}
-            value="1.6k"
-            title="Article Read"
-            iconColor="var(--mui-palette-success-main)"
-            icon={<ReceiptIcon fontSize="var(--icon-fontSize-lg)" />}
+            value="3k"
+            title="Credit Bought"
+            iconColor="var(--mui-palette-warning-main)"
+            icon={<CurrencyDollarIcon fontSize="var(--icon-fontSize-lg)" />}
           />
         </Grid>
         <Grid lg={3} sm={6} xs={12}>
           <CreditCard
             sx={{ height: '100%' }}
-            value="1.6k"
-            title="Credit Bought"
-            iconColor="var(--mui-palette-warning-main)"
-            icon={<CurrencyDollarIcon fontSize="var(--icon-fontSize-lg)" />}
+            value="359"
+            title="Article Read"
+            iconColor="var(--mui-palette-success-main)"
+            icon={<ReceiptIcon fontSize="var(--icon-fontSize-lg)" />}
           />
         </Grid>
       </Grid>
