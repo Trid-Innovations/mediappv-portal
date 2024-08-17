@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { usePathname } from 'next/navigation';
 import Avatar from '@mui/material/Avatar';
 import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
@@ -10,7 +11,6 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { Bell as BellIcon } from '@phosphor-icons/react/dist/ssr/Bell';
 import { List as ListIcon } from '@phosphor-icons/react/dist/ssr/List';
-import { Users as UsersIcon } from '@phosphor-icons/react/dist/ssr/Users';
 
 
 
@@ -26,21 +26,18 @@ export function MainNav(): React.JSX.Element {
   const [openNav, setOpenNav] = React.useState<boolean>(false);
 
   const userPopover = usePopover<HTMLDivElement>();
-  const title =
-    window.location.pathname
-      .split('/')
+
+  const title = usePathname().split('/')
       .filter((path) => path !== '')
       .reverse()[0]
       .toString()
       .charAt(0)
-      .toUpperCase() +
-    window.location.pathname
-      .split('/')
-      .filter((path) => path !== '')
-      .reverse()[0]
-      .toString()
-      .slice(1);
-
+      .toUpperCase() + usePathname()
+    .split('/')
+    .filter((path) => path !== '')
+    .reverse()[0]
+    .toString()
+    .slice(1);
   return (
     <React.Fragment>
       <Box
@@ -68,25 +65,8 @@ export function MainNav(): React.JSX.Element {
               <ListIcon />
             </IconButton>
             <Typography variant="h4">
-              {window.location.pathname
-      .split('/')
-      .filter((path) => path !== '')
-      .reverse()[0]
-      .toString()
-      .charAt(0)
-      .toUpperCase() +
-    window.location.pathname
-      .split('/')
-      .filter((path) => path !== '')
-      .reverse()[0]
-      .toString()
-      .slice(1)}
+              {title}
             </Typography>
-            {/* <Tooltip title="Search">
-              <IconButton>
-                <TimerIcon />
-              </IconButton>
-            </Tooltip> */}
           </Stack>
           <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>
             <Tooltip title="Notifications">

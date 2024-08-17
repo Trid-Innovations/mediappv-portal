@@ -32,12 +32,7 @@ export function CreditCard({ diff, sx, title, value, icon, iconColor }: CreditCa
           </Stack>
           {diff ? (
             <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>
-              {/* <Stack sx={{ alignItems: 'center' }} direction="row" spacing={0.5}>
-                <TrendIcon color={trendColor} fontSize="var(--icon-fontSize-md)" />
-                <Typography color={trendColor} variant="body2">
-                  {diff}%
-                </Typography>
-              </Stack> */}
+
               <Typography color="text.secondary" variant="caption">
                 Media Credits
               </Typography>

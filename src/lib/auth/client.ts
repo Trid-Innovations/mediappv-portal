@@ -51,11 +51,6 @@ class AuthClient
   {
     const token = generateToken();
     localStorage.setItem('custom-auth-token', token);
-    // Cookies.set('token', token, { expires: Date.now() + oneDay, secure: true });
-    // cookies().set('mediappv', 'lee', { secure: true, expires: Date.now() + oneDay })
-    // const [sessionToken: string, setSessionToken, deleteSessionToken] = useCookie("sessionToken");
-    // setSessionToken(token, 2);
-    //document.cookie = `${cookieName}=${value}; expires=${(Date.now() + oneDay)}; path=/`;
     return {};
   }
 
@@ -77,16 +72,16 @@ class AuthClient
     }
 
     const token = generateToken();
-    localStorage.setItem('custom-auth-token', token);
-    //"MEDIAPPV_SESSION_TOKEN=validMediappvSessionJWT; Expires=Tue, 19 Jan 2038 03:14:07 GMT; HttpOnly; Secure; SameSite=Strict; Path=/; Domain=.mediappv.io;"
 
-    Cookies.set('MEDIAPPV_SESSION_TOKEN_LOCAL', 'validMediappvSessionJWT', { expires: Date.now() + (24 * 60 * 60) })
-    Cookies.set('MEDIAPPV_SESSION_TOKEN', 'validMediappvSessionJWT', { expires: Date.now() + (24 * 60 * 60), secure: true, httpOnly: true, domain: '.mediappv.io', path: '/', sameSite: "strict" })
-    // const oneDay = 24 * 60 * 60
-    // useCookie.
-    // cookies().set('mediappv', 'lee', { secure: true, expires: Date.now() + (24 * 60 * 60) })
-    // const [username, setUsername, deleteUsername] = useCookie("username");
-    return {};
+    localStorage.setItem('custom-auth-token', token);
+
+    if (window.location.host.includes('localhost'))
+    {
+      Cookies.set('MEDIAPPV_SESSION_TOKEN_LOCAL', 'validMediappvSessionJWT', { expires: Date.now() + (24 * 60 * 60), secure: true, path: '/', sameSite: "strict" })
+    } else
+    {
+      Cookies.set('MEDIAPPV_SESSION_TOKEN', 'validMediappvSessionJWT', { expires: Date.now() + (24 * 60 * 60), secure: true, path: '/', sameSite: "strict", httpOnly: true, domain: '.mediappv.io' })
+    } return {};
   }
 
   async resetPassword(_: ResetPasswordParams): Promise<{ error?: string }>

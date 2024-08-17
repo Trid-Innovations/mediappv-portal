@@ -92,20 +92,6 @@ export default function Page(): React.JSX.Element {
 
   return (
     <Stack spacing={3}>
-      {/* <Stack direction="row" spacing={3}>
-        <Stack spacing={1} sx={{ flex: '1 1 auto' }}>
-          <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-            <Button color="inherit" startIcon={<DownloadIcon fontSize="var(--icon-fontSize-md)" />}>
-              Export
-            </Button>
-          </Stack>
-        </Stack>
-        <div>
-          <Button startIcon={<PlusIcon fontSize="var(--icon-fontSize-md)" />} variant="contained">
-            Add
-          </Button>
-        </div> 
-      </Stack>*/}
       <HistoryFilters />
       <HistoryTable count={paginatedHistory.length} page={page} rows={paginatedHistory} rowsPerPage={rowsPerPage} />
     </Stack>
