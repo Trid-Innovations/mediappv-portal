@@ -16,9 +16,9 @@ export const metadata = { title: `Settings | ${config.site.name}` } satisfies Me
 export default function Page(): React.JSX.Element {
   return (
     <AuthenicatedLayout>
-    <Stack spacing={3}>
-      <Notifications />
-      <UpdatePasswordForm />
+      <Stack spacing={3}>
+        <Notifications />
+        <UpdatePasswordForm />
       </Stack>
     </AuthenicatedLayout>
   );
