@@ -4,6 +4,7 @@ import Stack from '@mui/material/Stack';
 import dayjs from 'dayjs';
 
 import { config } from '@/config';
+import AuthenicatedLayout from '@/components/core/layout';
 import { HistoryFilters } from '@/components/dashboard/history/history-filters';
 import { HistoryTable } from '@/components/dashboard/history/history-table';
 import type { History } from '@/components/dashboard/history/history-table';
@@ -91,10 +92,12 @@ export default function Page(): React.JSX.Element {
   const paginatedHistory = applyPagination(history, page, rowsPerPage);
 
   return (
-    <Stack spacing={3}>
-      <HistoryFilters />
-      <HistoryTable count={paginatedHistory.length} page={page} rows={paginatedHistory} rowsPerPage={rowsPerPage} />
-    </Stack>
+    <AuthenicatedLayout>
+      <Stack spacing={3}>
+        <HistoryFilters />
+        <HistoryTable count={paginatedHistory.length} page={page} rows={paginatedHistory} rowsPerPage={rowsPerPage} />
+      </Stack>
+    </AuthenicatedLayout>
   );
 }
 

@@ -11,7 +11,7 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-export default function Layout({ children }: LayoutProps): React.JSX.Element {
+export default function AuthenicatedLayout({ children }: LayoutProps): React.JSX.Element {
   return (
     <AuthGuard>
       <GlobalStyles

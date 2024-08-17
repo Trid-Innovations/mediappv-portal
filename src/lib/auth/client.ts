@@ -1,11 +1,7 @@
 'use client';
-
-// import { cookies } from 'next/headers'
 import Cookies from 'js-cookie';
 
 import type { User } from '@/types/user';
-
-// import { useCookie } from './cookie';
 
 function generateToken(): string {
   const arr = new Uint8Array(12);

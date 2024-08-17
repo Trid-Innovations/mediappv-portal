@@ -4,6 +4,7 @@ import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Unstable_Grid2';
 
 import { config } from '@/config';
+import AuthenicatedLayout from '@/components/core/layout';
 import { AccountDetailsForm } from '@/components/dashboard/account/account-details-form';
 import { AccountInfo } from '@/components/dashboard/account/account-info';
 
@@ -11,15 +12,17 @@ export const metadata = { title: `Account | ${config.site.name}` } satisfies Met
 
 export default function Page(): React.JSX.Element {
   return (
-    <Stack spacing={3}>
-      <Grid container spacing={3}>
-        <Grid lg={4} md={6} xs={12}>
-          <AccountInfo />
+    <AuthenicatedLayout>
+      <Stack spacing={3}>
+        <Grid container spacing={3}>
+          <Grid lg={4} md={6} xs={12}>
+            <AccountInfo />
+          </Grid>
+          <Grid lg={8} md={6} xs={12}>
+            <AccountDetailsForm />
+          </Grid>
         </Grid>
-        <Grid lg={8} md={6} xs={12}>
-          <AccountDetailsForm />
-        </Grid>
-      </Grid>
-    </Stack>
+      </Stack>
+    </AuthenicatedLayout>
   );
 }
