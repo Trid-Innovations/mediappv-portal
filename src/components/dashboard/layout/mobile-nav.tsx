@@ -8,14 +8,15 @@ import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { Receipt as ReceiptIcon } from '@phosphor-icons/react/dist/ssr/Receipt';
 
 import type { NavItemConfig } from '@/types/nav';
 import { paths } from '@/paths';
 import { isNavItemActive } from '@/lib/is-nav-item-active';
-import { Logo } from '@/components/core/logo';
 
 import { navItems } from './config';
 import { navIcons } from './nav-icons';
+
 
 export interface MobileNavProps {
   onClose?: () => void;
@@ -56,7 +57,12 @@ export function MobileNav({ open, onClose }: MobileNavProps): React.JSX.Element 
     >
       <Stack spacing={2} sx={{ p: 3 }}>
         <Box component={RouterLink} href={paths.home} sx={{ display: 'inline-flex' }}>
-          <Logo color="light" height={32} width={122} />
+          <Typography
+            component="span"
+            sx={{ color: 'white', backgroundColor: 'inherit', fontSize: '18px', fontWeight: 800, lineHeight: '28px' }}
+          >
+          <ReceiptIcon fontSize="var(--icon-fontSize-lg)" /> MediaPPV
+        </Typography>
         </Box>
       </Stack>
       <Divider sx={{ borderColor: 'var(--mui-palette-neutral-700)' }} />

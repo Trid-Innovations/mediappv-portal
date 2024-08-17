@@ -71,7 +71,7 @@ export function SignUpForm(): React.JSX.Element {
   );
 
   return (
-    <Stack spacing={3}>
+    <Stack spacing={2}>
       <Stack spacing={1}>
         <Typography variant="h4">Sign up</Typography>
         <Typography color="text.secondary" variant="body2">

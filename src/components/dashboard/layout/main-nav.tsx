@@ -42,7 +42,7 @@ export function MainNav(): React.JSX.Element {
         component="header"
         sx={{
           borderBottom: '1px solid var(--mui-palette-divider)',
-          backgroundColor: 'var(--mui-palette-background-paper)',
+          backgroundColor: 'dark',
           position: 'sticky',
           top: 0,
           zIndex: 'var(--mui-zIndex-appBar)',
@@ -62,7 +62,7 @@ export function MainNav(): React.JSX.Element {
             >
               <ListIcon />
             </IconButton>
-            <Typography variant="h4">{title}</Typography>
+            <Typography variant="h5">{title}</Typography>
           </Stack>
           <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>
             <Tooltip title="Notifications">

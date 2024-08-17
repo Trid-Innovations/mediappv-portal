@@ -79,7 +79,9 @@ export function AccountDetailsForm(): React.JSX.Element {
         </CardContent>
         <Divider />
         <CardActions sx={{ justifyContent: 'flex-end' }}>
-          <Button variant="contained">Save details</Button>
+          <Button color="warning" variant="contained">
+            Save details
+          </Button>
         </CardActions>
       </Card>
     </form>
