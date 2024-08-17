@@ -1,6 +1,6 @@
 import * as React from 'react';
-import type { Metadata } from 'next'; 
-import Stack from '@mui/material/Stack'; 
+import type { Metadata } from 'next';
+import Stack from '@mui/material/Stack';
 import dayjs from 'dayjs';
 
 import { config } from '@/config';
@@ -8,7 +8,7 @@ import { HistoryFilters } from '@/components/dashboard/history/history-filters';
 import { HistoryTable } from '@/components/dashboard/history/history-table';
 import type { History } from '@/components/dashboard/history/history-table';
 
-export const metadata = { title: `History | Dashboard | ${config.site.name}` } satisfies Metadata;
+export const metadata = { title: `History | ${config.site.name}` } satisfies Metadata;
 
 const history = [
   {

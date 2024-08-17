@@ -7,7 +7,6 @@ import type { SxProps } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import { Users as UsersIcon } from '@phosphor-icons/react/dist/ssr/Users';
 
-
 export interface TotalHistoryProps {
   diff?: number;
   sx?: SxProps;
@@ -15,7 +14,6 @@ export interface TotalHistoryProps {
 }
 
 export function TotalHistory({ diff, sx, value }: TotalHistoryProps): React.JSX.Element {
-
   return (
     <Card sx={sx}>
       <CardContent>

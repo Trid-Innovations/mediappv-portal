@@ -12,32 +12,30 @@ import Typography from '@mui/material/Typography';
 import { Bell as BellIcon } from '@phosphor-icons/react/dist/ssr/Bell';
 import { List as ListIcon } from '@phosphor-icons/react/dist/ssr/List';
 
-
-
 import { usePopover } from '@/hooks/use-popover';
-
-
 
 import { MobileNav } from './mobile-nav';
 import { UserPopover } from './user-popover';
-
 
 export function MainNav(): React.JSX.Element {
   const [openNav, setOpenNav] = React.useState<boolean>(false);
 
   const userPopover = usePopover<HTMLDivElement>();
 
-  const title = usePathname().split('/')
+  const title =
+    usePathname()
+      .split('/')
       .filter((path) => path !== '')
       .reverse()[0]
       .toString()
       .charAt(0)
-      .toUpperCase() + usePathname()
-    .split('/')
-    .filter((path) => path !== '')
-    .reverse()[0]
-    .toString()
-    .slice(1);
+      .toUpperCase() +
+    usePathname()
+      .split('/')
+      .filter((path) => path !== '')
+      .reverse()[0]
+      .toString()
+      .slice(1);
   return (
     <React.Fragment>
       <Box
@@ -64,9 +62,7 @@ export function MainNav(): React.JSX.Element {
             >
               <ListIcon />
             </IconButton>
-            <Typography variant="h4">
-              {title}
-            </Typography>
+            <Typography variant="h4">{title}</Typography>
           </Stack>
           <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>
             <Tooltip title="Notifications">

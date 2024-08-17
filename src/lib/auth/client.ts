@@ -1,12 +1,13 @@
-
 'use client';
+
 // import { cookies } from 'next/headers'
 import Cookies from 'js-cookie';
+
 import type { User } from '@/types/user';
+
 // import { useCookie } from './cookie';
 
-function generateToken(): string
-{
+function generateToken(): string {
   const arr = new Uint8Array(12);
   window.crypto.getRandomValues(arr);
   return Array.from(arr, (v) => v.toString(16).padStart(2, '0')).join('');
@@ -20,54 +21,44 @@ const user = {
   email: 'aristote.lamine@example.io',
 } satisfies User;
 
-export interface SignUpParams
-{
+export interface SignUpParams {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
 }
 
-export interface SignInWithOAuthParams
-{
+export interface SignInWithOAuthParams {
   provider: 'google' | 'discord';
 }
 
-export interface SignInWithPasswordParams
-{
+export interface SignInWithPasswordParams {
   email: string;
   password: string;
 }
 
-export interface ResetPasswordParams
-{
+export interface ResetPasswordParams {
   email: string;
 }
 
-class AuthClient
-{
-
-  async signUp(_: SignUpParams): Promise<{ error?: string }>
-  {
+class AuthClient {
+  async signUp(_: SignUpParams): Promise<{ error?: string }> {
     const token = generateToken();
     localStorage.setItem('custom-auth-token', token);
     return {};
   }
 
-  async signInWithOAuth(_: SignInWithOAuthParams): Promise<{ error?: string }>
-  {
+  async signInWithOAuth(_: SignInWithOAuthParams): Promise<{ error?: string }> {
     return { error: 'Social authentication not implemented' };
   }
 
-  async signInWithPassword(params: SignInWithPasswordParams): Promise<{ error?: string }>
-  {
+  async signInWithPassword(params: SignInWithPasswordParams): Promise<{ error?: string }> {
     const { email, password } = params;
 
     // Make API request
 
     // We do not handle the API, so we'll check if the credentials match with the hardcoded ones.
-    if (email !== 'aristote.lamine@example.io' || password !== 'Secret1')
-    {
+    if (email !== 'aristote.lamine@example.io' || password !== 'Secret1') {
       return { error: 'Invalid credentials' };
     }
 
@@ -75,42 +66,48 @@ class AuthClient
 
     localStorage.setItem('custom-auth-token', token);
 
-    if (window.location.host.includes('localhost'))
-    {
-      Cookies.set('MEDIAPPV_SESSION_TOKEN_LOCAL', 'validMediappvSessionJWT', { expires: Date.now() + (24 * 60 * 60), secure: true, path: '/', sameSite: "strict" })
-    } else
-    {
-      Cookies.set('MEDIAPPV_SESSION_TOKEN', 'validMediappvSessionJWT', { expires: Date.now() + (24 * 60 * 60), secure: true, path: '/', sameSite: "strict", httpOnly: true, domain: '.mediappv.io' })
-    } return {};
+    if (window.location.host.includes('localhost')) {
+      Cookies.set('MEDIAPPV_SESSION_TOKEN_LOCAL', 'validMediappvSessionJWT', {
+        expires: 1,
+        secure: true,
+        path: '/',
+        sameSite: 'strict',
+      });
+    } else {
+      Cookies.set('MEDIAPPV_SESSION_TOKEN', 'validMediappvSessionJWT', {
+        expires: 1,
+        secure: true,
+        path: '/',
+        sameSite: 'strict',
+        httpOnly: true,
+        domain: '.mediappv.io',
+      });
+    }
+    return {};
   }
 
-  async resetPassword(_: ResetPasswordParams): Promise<{ error?: string }>
-  {
+  async resetPassword(_: ResetPasswordParams): Promise<{ error?: string }> {
     return { error: 'Password reset not implemented' };
   }
 
-  async updatePassword(_: ResetPasswordParams): Promise<{ error?: string }>
-  {
+  async updatePassword(_: ResetPasswordParams): Promise<{ error?: string }> {
     return { error: 'Update reset not implemented' };
   }
 
-  async getUser(): Promise<{ data?: User | null; error?: string }>
-  {
+  async getUser(): Promise<{ data?: User | null; error?: string }> {
     // Make API request
 
     // We do not handle the API, so just check if we have a token in localStorage.
     const token = localStorage.getItem('custom-auth-token');
 
-    if (!token)
-    {
+    if (!token) {
       return { data: null };
     }
 
     return { data: user };
   }
 
-  async signOut(): Promise<{ error?: string }>
-  {
+  async signOut(): Promise<{ error?: string }> {
     localStorage.removeItem('custom-auth-token');
 
     return {};
