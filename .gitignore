@@ -7,7 +7,7 @@
 
 # testing
 /coverage
-
+.pnpm-store
 # production
 /build
 out
