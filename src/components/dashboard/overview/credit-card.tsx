@@ -12,10 +12,10 @@ export interface CreditCardProps {
   title: string;
   value: string;
   icon: React.JSX.Element;
-  iconColor: string;
+  iconColor?: string;
 }
 
-export function CreditCard({ diff, sx, title, value, icon, iconColor }: CreditCardProps): React.JSX.Element {
+export function CreditCard({ diff, sx, title, value, icon }: CreditCardProps): React.JSX.Element {
   return (
     <Card sx={sx}>
       <CardContent>
