@@ -69,17 +69,17 @@ app.get('/session', (req, res) => {
   console.log('Cookies:', req.cookies);
   const cookieToken = req?.cookies?.MEDIAPPV_SESSION_TOKEN;
   console.log({ cookieToken });
-  // res.status(200).json(sessionData);
-  if (cookieToken === 'validMediappvSessionJWT') {
-    res.status(200).json(sessionData);
-  } else {
-    res.status(200).json({
-      error: {
-        code: 'INVALID_SESSION',
-        message: 'The given JWT token has an invalid signature',
-      },
-    });
-  }
+  res.status(200).json(sessionData);
+  // if (cookieToken === 'validMediappvSessionJWT') {
+  //   res.status(200).json(sessionData);
+  // } else {
+  //   res.status(200).json({
+  //     error: {
+  //       code: 'INVALID_SESSION',
+  //       message: 'The given JWT token has an invalid signature',
+  //     },
+  //   });
+  // }
 });
 
 // Route to logout session
