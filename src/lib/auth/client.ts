@@ -1,7 +1,10 @@
 'use client';
+
 import Cookies from 'js-cookie';
 
 import type { User } from '@/types/user';
+
+import { createSession, fetchSession, requestValidateSession } from './session-client';
 
 function generateToken(): string {
   const arr = new Uint8Array(12);
@@ -9,13 +12,13 @@ function generateToken(): string {
   return Array.from(arr, (v) => v.toString(16).padStart(2, '0')).join('');
 }
 
-const user = {
-  id: 'USR-000',
-  avatar: '/assets/avatar-11.png',
-  firstName: 'Aristote',
-  lastName: 'Lamine',
-  email: 'aristote.lamine@example.io',
-} satisfies User;
+// const user = {
+//   id: 'USR-000',
+//   avatar: '/assets/avatar-11.png',
+//   firstName: 'Aristote',
+//   lastName: 'Lamine',
+//   email: 'aristote.lamine@example.io',
+// } satisfies User;
 
 export interface SignUpParams {
   firstName: string;
@@ -48,37 +51,47 @@ class AuthClient {
     return { error: 'Social authentication not implemented' };
   }
 
+  //should be create session
   async signInWithPassword(params: SignInWithPasswordParams): Promise<{ error?: string }> {
     const { email, password } = params;
+    try {
+      const response = await createSession({ username: email, password: password });
+      const { sessionToken } = response.data;
+      const validateSessionResponse = await requestValidateSession(sessionToken);
 
-    // Make API request
+      if (!validateSessionResponse?.data?.error) {
+        Cookies.set('MEDIAPPV_SESSION_TOKEN', 'validMediappvSessionJWT', {
+          expires: 1,
+          secure: true,
+          path: '/',
+          sameSite: 'Lax',
+          httpOnly: false,
+          domain: '.mediappv.tech',
+        });
 
-    // We do not handle the API, so we'll check if the credentials match with the hardcoded ones.
-    if (email !== 'aristote.lamine@example.io' || password !== 'Secret1') {
-      return { error: 'Invalid credentials' };
-    }
+        // //TODO: this handle the redirection when we come from the provider for a login request
+        // const returnUrl = localStorage.getItem('returnUrl');
+        // const articleLink = localStorage.getItem('articleLink');
+        // const providerId = localStorage.getItem('providerId');
+        // const cost = localStorage.getItem('cost');
+        // if (returnUrl) {
+        //   // Close the current tab
 
-    const token = generateToken();
+        //   debugger;
+        //   const fullReturnUrl = `${returnUrl}?mediappvSession=validMediappvSessionJWT&cost=${cost}&providerId=${providerId}&articleLink=${articleLink}&redirection=true`;
+        //   const urlObj = new URL(fullReturnUrl);
 
-    localStorage.setItem('custom-auth-token', token);
+        //   const path = urlObj.toString();
+        //   window.close();
+        //   window.window.history.pushState({ path }, '', path);
+        //   localStorage.removeItem('returnUrl');
+        //   localStorage.removeItem('articleLink');
+        //   localStorage.removeItem('providerId');
+        //   localStorage.removeItem('cost');
+        // }
+      }
+    } catch (error) {}
 
-    if (window.location.host.includes('localhost')) {
-      Cookies.set('MEDIAPPV_SESSION_TOKEN_LOCAL', 'validMediappvSessionJWT', {
-        expires: 1,
-        secure: true,
-        path: '/',
-        sameSite: 'strict',
-      });
-    } else {
-      Cookies.set('MEDIAPPV_SESSION_TOKEN', 'validMediappvSessionJWT', {
-        expires: 1,
-        secure: true,
-        path: '/',
-        sameSite: 'strict',
-        httpOnly: true,
-        domain: '.mediappv.io',
-      });
-    }
     return {};
   }
 
@@ -90,17 +103,15 @@ class AuthClient {
     return { error: 'Update reset not implemented' };
   }
 
+  //TODO: should be getSession
   async getUser(): Promise<{ data?: User | null; error?: string }> {
-    // Make API request
+    const response = await fetchSession();
 
-    // We do not handle the API, so just check if we have a token in localStorage.
-    const token = localStorage.getItem('custom-auth-token');
-
-    if (!token) {
+    if (response?.data?.error) {
       return { data: null };
+    } else {
+      return { data: response.data };
     }
-
-    return { data: user };
   }
 
   async signOut(): Promise<{ error?: string }> {
