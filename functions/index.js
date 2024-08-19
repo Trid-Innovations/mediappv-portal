@@ -1,6 +1,6 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-const cookieParser = require('cookie-parser');
+// const cookieParser = require('cookie-parser');
 const express = require('express');
 const cors = require('cors');
 const validSessionResponse = require('./responses/validSessionResponse.json');
@@ -22,7 +22,7 @@ app.use(
     credentials: true,
   })
 );
-app.use(cookieParser());
+// app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -70,6 +70,7 @@ app.get('/session', (req, res) => {
   const cookieToken = req?.cookies?.MEDIAPPV_SESSION_TOKEN;
   console.log({ cookieToken });
   res.status(200).json(sessionData);
+  // TODO: uncomment this once the integration done
   // if (cookieToken === 'validMediappvSessionJWT') {
   //   res.status(200).json(sessionData);
   // } else {
