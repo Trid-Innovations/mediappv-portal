@@ -16,4 +16,7 @@ for prod:
 const baseURL = 'https://us-central1-mediappv-936c2.cloudfunctions.net/api/';
 
 for local
+
 const baseURL = 'http://127.0.0.1:5001/mediappv-936c2/us-central1/api/';
+
+deploy the function: firebase deploy --only functions
