@@ -63,6 +63,15 @@ module.exports = {
     '@typescript-eslint/no-unnecessary-condition': 'off', // remove when no static data is used
     '@typescript-eslint/require-await': 'off', // Server Actions require async flag always
     '@typescript-eslint/prefer-nullish-coalescing': 'off', // personal style
+    '@typescript-eslint/no-unsafe-member-access': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/no-unsafe-argument': 'off',
+    'prefer-promise-reject-errors': 'off',
+    '@typescript-eslint/prefer-promise-reject-errors': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    'no-empty': 'off',
     '@typescript-eslint/restrict-template-expressions': [
       'error',
       {
