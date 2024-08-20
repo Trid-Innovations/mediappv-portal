@@ -1,21 +1,14 @@
 'use client';
-import Cookies from 'js-cookie';
 
 import type { User } from '@/types/user';
+
+import { createSession, fetchSession, logout, requestValidateSession } from './session-client';
 
 function generateToken(): string {
   const arr = new Uint8Array(12);
   window.crypto.getRandomValues(arr);
   return Array.from(arr, (v) => v.toString(16).padStart(2, '0')).join('');
 }
-
-const user = {
-  id: 'USR-000',
-  avatar: '/assets/avatar-11.png',
-  firstName: 'Aristote',
-  lastName: 'Lamine',
-  email: 'aristote.lamine@example.io',
-} satisfies User;
 
 export interface SignUpParams {
   firstName: string;
@@ -48,37 +41,25 @@ class AuthClient {
     return { error: 'Social authentication not implemented' };
   }
 
+  //should be create session
   async signInWithPassword(params: SignInWithPasswordParams): Promise<{ error?: string }> {
     const { email, password } = params;
+    try {
+      const response = await createSession({ username: email, password });
+      const sessionToken = response.data?.sessionToken;
+      await requestValidateSession(sessionToken);
+      const returnUrl = localStorage.getItem('returnUrl');
+      if (returnUrl) {
+        const fullReturnUrl = `${returnUrl}?requestedForPayment=true`;
+        const urlObj = new URL(fullReturnUrl);
 
-    // Make API request
+        const path = urlObj.toString();
+        window.location.href = path;
 
-    // We do not handle the API, so we'll check if the credentials match with the hardcoded ones.
-    if (email !== 'aristote.lamine@example.io' || password !== 'Secret1') {
-      return { error: 'Invalid credentials' };
-    }
+        localStorage.removeItem('returnUrl');
+      }
+    } catch (error) {}
 
-    const token = generateToken();
-
-    localStorage.setItem('custom-auth-token', token);
-
-    if (window.location.host.includes('localhost')) {
-      Cookies.set('MEDIAPPV_SESSION_TOKEN_LOCAL', 'validMediappvSessionJWT', {
-        expires: 1,
-        secure: true,
-        path: '/',
-        sameSite: 'strict',
-      });
-    } else {
-      Cookies.set('MEDIAPPV_SESSION_TOKEN', 'validMediappvSessionJWT', {
-        expires: 1,
-        secure: true,
-        path: '/',
-        sameSite: 'strict',
-        httpOnly: true,
-        domain: '.mediappv.io',
-      });
-    }
     return {};
   }
 
@@ -90,21 +71,19 @@ class AuthClient {
     return { error: 'Update reset not implemented' };
   }
 
+  //TODO: should be getSession
   async getUser(): Promise<{ data?: User | null; error?: string }> {
-    // Make API request
+    const response = await fetchSession();
 
-    // We do not handle the API, so just check if we have a token in localStorage.
-    const token = localStorage.getItem('custom-auth-token');
-
-    if (!token) {
+    if (response?.data?.error) {
       return { data: null };
     }
-
-    return { data: user };
+    return { data: response.data };
   }
 
   async signOut(): Promise<{ error?: string }> {
-    localStorage.removeItem('custom-auth-token');
+    // localStorage.removeItem('custom-auth-token');
+    await logout();
 
     return {};
   }
