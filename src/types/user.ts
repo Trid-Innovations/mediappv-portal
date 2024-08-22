@@ -3,6 +3,9 @@ export interface User {
   name?: string;
   avatar?: string;
   email?: string;
-
+  settings: {
+    returnUrl: string,
+    credit: number
+  };
   [key: string]: unknown;
 }
